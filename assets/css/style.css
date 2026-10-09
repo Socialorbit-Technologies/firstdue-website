@@ -475,3 +475,19 @@ header .wrap.nav{position:static}
 .drawer nav .dsvc a.ds{font-size:16px;font-weight:500;padding:9px 0 9px 12px;border-bottom:0;color:var(--slate)}
 .mega-col h5{white-space:nowrap;font-size:18px}
 .mega-inner{grid-template-columns:1fr 1.25fr 1fr 1fr 1.15fr}
+
+/* ---------- Oversized header logo badge (overlaps the hero) ---------- */
+header .nav .logo{position:relative;z-index:6;align-self:flex-start;margin-top:10px}
+header .nav .site-logo{width:136px;height:136px;padding:8px;background:#fff;border-radius:18px;border-bottom:4px solid var(--red);box-shadow:0 16px 36px rgba(28,28,30,.24),0 0 0 1px rgba(212,175,55,.35);transition:width .25s,height .25s,padding .25s,border-radius .25s,box-shadow .25s,margin .25s}
+header.scrolled .nav .site-logo{width:72px;height:72px;padding:4px;border-radius:12px;border-bottom-width:3px;box-shadow:0 6px 16px rgba(28,28,30,.16);margin-top:-4px}
+.hero{padding-top:104px}
+.page-hero{padding-top:96px}
+@media (max-width:640px){
+  header .nav .logo{margin-top:6px}
+  header .nav .site-logo{width:92px;height:92px;padding:5px;border-radius:14px;border-bottom-width:3px}
+  header.scrolled .nav .site-logo{width:58px;height:58px;padding:3px;margin-top:-2px}
+  .hero{padding-top:64px}
+  .page-hero{padding-top:64px}
+}
+.drawer .site-logo{height:56px;width:auto}
+@media (prefers-reduced-motion:reduce){header .nav .site-logo{transition:none}}
