@@ -446,3 +446,32 @@ footer .site-logo{height:84px;background:#fff;border-radius:10px;padding:6px}
 .qwrap .thanks{display:none}
 .book-grid>*,.contact-grid>*,.hero .wrap>*,.svc-layout>*{min-width:0}
 @media (max-width:900px){.book-grid{grid-template-columns:1fr;gap:36px}}
+
+/* ---------- Services mega menu ---------- */
+.has-mega{position:static}
+.mega-toggle{display:inline-flex;align-items:center;gap:4px}
+.mega-toggle .caret{width:15px;height:15px;transition:transform .2s}
+.mega{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:3px solid var(--red);box-shadow:0 24px 50px rgba(28,28,30,.14);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:60}
+.has-mega:hover .mega,.has-mega:focus-within .mega,.has-mega.open .mega{opacity:1;visibility:visible;transform:none}
+.has-mega:hover .caret,.has-mega:focus-within .caret,.has-mega.open .caret{transform:rotate(180deg)}
+.mega-inner{display:grid;grid-template-columns:repeat(4,1fr) 1.15fr;gap:28px;padding-top:30px;padding-bottom:32px}
+.mega-col h5,.mega-cta h5{font-family:var(--head);font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.mega-col h5::before{content:"";width:13px;height:13px;background:var(--red);-webkit-mask:var(--mc) center/contain no-repeat;mask:var(--mc) center/contain no-repeat}
+.mega-col ul{list-style:none;display:grid;gap:2px}
+.menu .mega-col a{display:block;padding:6px 8px;margin-left:-8px;border-radius:6px;font-size:15px;font-weight:500;color:var(--slate)}
+.menu .mega-col a:hover,.menu .mega-col a:focus{background:var(--blush);color:var(--red)}
+.mega-cta{background:var(--blush);border-radius:12px;padding:20px}
+.mega-cta p{font-size:14px;color:var(--slate);margin-bottom:14px;font-weight:400}
+.mega-cta .btn{width:100%;padding:12px 14px;font-size:15px}
+.menu .mega-cta .mega-all{display:block;text-align:center;margin-top:12px;font-size:14px;font-weight:700;color:var(--red)}
+header .wrap.nav{position:static}
+/* Mobile drawer services list */
+.drawer{overflow-y:auto}
+.dsvc summary{list-style:none;cursor:pointer;padding:16px 0;border-bottom:1px solid var(--line);font-size:20px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.dsvc summary::-webkit-details-marker{display:none}
+.dsvc summary::after{content:"+";color:var(--red);font-size:24px}
+.dsvc[open] summary::after{content:"–"}
+.dsvc .dg{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:14px 0 4px}
+.drawer nav .dsvc a.ds{font-size:16px;font-weight:500;padding:9px 0 9px 12px;border-bottom:0;color:var(--slate)}
+.mega-col h5{white-space:nowrap;font-size:18px}
+.mega-inner{grid-template-columns:1fr 1.25fr 1fr 1fr 1.15fr}
