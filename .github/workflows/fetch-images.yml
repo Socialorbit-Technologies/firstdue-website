@@ -1,0 +1,63 @@
+# One-time job: copies the site's photos and logo from the old WordPress uploads
+# into assets/img/ with descriptive names, compresses them, and commits them.
+name: Import images into assets/img
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install image tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
+      - name: Download and optimize
+        run: |
+          set -e
+          mkdir -p assets/img
+          U="https://firstduefiretruckparty.com/wp-content/uploads/2023/08"
+          P="Fire-Truck-Party-Event-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events"
+          while read -r SRC NAME; do
+            [ -z "$SRC" ] && continue
+            curl -fsSL -A "Mozilla/5.0 (asset import)" "$U/$SRC" -o "/tmp/$NAME"
+            case "$NAME" in
+              *.png) cp "/tmp/$NAME" "assets/img/$NAME" ;;
+              *) convert "/tmp/$NAME" -auto-orient -strip -resize '1920x1920>' -sampling-factor 4:2:0 -interlace JPEG -quality 80 "assets/img/$NAME" ;;
+            esac
+            echo "$NAME $(identify -format '%wx%h' "assets/img/$NAME") $(du -k "assets/img/$NAME" | cut -f1)KB"
+          done <<LIST
+          $P-01.jpeg fire-truck-church-event.jpg
+          $P-02.jpg fire-truck-birthday-party-orlando.jpg
+          $P-03.jpeg fire-truck-school-visit-class.jpg
+          $P-04.jpg fire-truck-school-carnival.jpg
+          $P-05-scaled.jpeg fire-truck-party-kids.jpg
+          $P-06.jpg fire-truck-school-visit-hose.jpg
+          $P-07.jpeg fire-truck-parade.jpg
+          $P-08.jpg child-waving-from-fire-truck.jpg
+          $P-09.jpg fire-truck-grand-opening.jpg
+          $P-10.jpg fire-truck-company-picnic.jpg
+          $P-11.jpg fire-truck-water-party.jpg
+          $P-12.jpg fire-truck-water-muster.jpg
+          $P-13.jpg fire-truck-display.jpg
+          $P-14.jpg fire-truck-corporate-event.jpg
+          $P-15.jpg classic-red-car-display.jpg
+          $P-16.jpg fire-truck-lights-event.jpg
+          $P-17.jpg fire-truck-fleet-apopka.jpg
+          Fire-Truck-Party-Events-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events-28.jpg fire-rescue-truck-by-water.jpg
+          cropped-Fire-Truck-Party-Event-Rental-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events-Apopka-FL.png 1st-due-fire-truck-party-logo.png
+          LIST
+          convert assets/img/1st-due-fire-truck-party-logo.png -resize 512x512 -strip assets/img/1st-due-fire-truck-party-logo.png
+          convert assets/img/1st-due-fire-truck-party-logo.png -resize 180x180 assets/img/apple-touch-icon.png
+          convert assets/img/1st-due-fire-truck-party-logo.png -resize 32x32 assets/img/favicon-32.png
+          du -sh assets/img
+      - name: Commit images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/img
+          git commit -m "Import site images into assets/img" || echo "No changes"
+          git push
