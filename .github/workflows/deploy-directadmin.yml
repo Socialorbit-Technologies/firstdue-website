@@ -1,6 +1,6 @@
 # Uploads this repo to https://firstduefiretruckparty.com/staging/ on the DirectAdmin host.
 # Needs these repository secrets (Settings > Secrets and variables > Actions):
-#   FTP_SERVER      e.g. ftp.firstduefiretruckparty.com  (or the server IP)
+#   FTP_SERVER      104.152.168.40 (server IP; ftp.firstduefiretruckparty.com has no DNS record)
 #   FTP_USERNAME    the DirectAdmin FTP user
 #   FTP_PASSWORD    that user's password
 #   FTP_SERVER_DIR  (optional) folder on the server, ending in /
@@ -40,6 +40,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ${{ secrets.FTP_PROTOCOL || 'ftps' }}
+          security: loose  # allow the host's certificate when connecting by IP
           server-dir: ${{ secrets.FTP_SERVER_DIR || 'domains/firstduefiretruckparty.com/public_html/staging/' }}
           exclude: |
             **/.git*
