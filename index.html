@@ -28,7 +28,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where are you located and what areas do you serve?", "acceptedAnswer": {"@type": "Answer", "text": "We're based in Apopka, FL, and serve everywhere within 50 miles of ZIP 32712, including Orlando, Winter Park, Sanford and Clermont. We travel farther with a fuel surcharge."}}, {"@type": "Question", "name": "How do I book a fire truck for my event?", "acceptedAnswer": {"@type": "Answer", "text": "Call 321.248.9000 or request a free quote online. We'll confirm availability and help you choose the right truck."}}, {"@type": "Question", "name": "What happens at a fire truck birthday party?", "acceptedAnswer": {"@type": "Answer", "text": "A short fire safety talk and truck tour for the guests' ages, a ride around the neighborhood, a chance to put out a simulated fire target, and lots of photos."}}, {"@type": "Question", "name": "How much does a fire truck party cost?", "acceptedAnswer": {"@type": "Answer", "text": "All-inclusive events start from $750. Your exact price depends on how long you'd like the truck, so request a free quote for your date."}}, {"@type": "Question", "name": "Are your events good for kids and adults?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We plan every event so guests of all ages have a great time."}}, {"@type": "Question", "name": "How far ahead should I book?", "acceptedAnswer": {"@type": "Answer", "text": "As early as you can. Weekends and holidays fill quickly."}}]}</script>
 </head>
 <body>
-<div style="background:#FFF7D6;color:#5c4a00;font:13px Inter,system-ui,sans-serif;text-align:center;padding:8px 16px;border-bottom:1px solid #f0e2a0">Staging preview · not indexed by search engines · the quote form is disabled here</div>
+<div style="background:#FFF7D6;color:#5c4a00;font:13px Inter,system-ui,sans-serif;text-align:center;padding:8px 16px;border-bottom:1px solid #f0e2a0">Staging preview · not indexed by search engines · quote requests are tagged [STAGING TEST]</div>
 <a class="skip" href="#main">Skip to content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mc" viewBox="0 0 100 100"><path d="M50 50L22 3L50 17L78 3Z"/><path d="M50 50L97 22L83 50L97 78Z"/><path d="M50 50L78 97L50 83L22 97Z"/><path d="M50 50L3 78L17 50L3 22Z"/></symbol></svg>
 <div class="topbar"><div class="wrap"><span>Based in Apopka, FL · Serving 50 miles around Orlando</span><a href="tel:+13212489000">Call or text: 321.248.9000</a></div></div>
@@ -65,7 +65,7 @@
     <div class="form-card"><div class="qwrap" id="quote">
       <h3>Get Your Free Quote</h3>
       <p class="note">Takes 30 seconds. Prefer to talk? <a href="tel:+13212489000">321.248.9000</a></p>
-      <form class="qform" method="post" action="#" onsubmit="event.preventDefault();alert('Staging preview: the form will send quote requests once the site is live on the real host.');return false;" data-preselect="">
+      <form class="qform" method="post" action="./send-quote.php" onsubmit="if(location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="">
         <div class="form-error" role="alert">Something went wrong. Please call us at 321.248.9000.</div>
         <div class="grid2">
           <div class="field"><label for="page-name">Name <em>*</em></label><input id="page-name" name="name" required autocomplete="name" placeholder="Jane Smith"></div>
@@ -252,7 +252,7 @@
     <div class="qwrap">
       <h3>Get Your Free Quote</h3>
       <p class="note">Takes 30 seconds. Prefer to talk? <a href="tel:+13212489000">321.248.9000</a></p>
-      <form class="qform" method="post" action="#" onsubmit="event.preventDefault();alert('Staging preview: the form will send quote requests once the site is live on the real host.');return false;" data-preselect="">
+      <form class="qform" method="post" action="./send-quote.php" onsubmit="if(location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="">
         <div class="form-error" role="alert">Something went wrong. Please call us at 321.248.9000.</div>
         <div class="grid2">
           <div class="field"><label for="modal-name">Name <em>*</em></label><input id="modal-name" name="name" required autocomplete="name" placeholder="Jane Smith"></div>

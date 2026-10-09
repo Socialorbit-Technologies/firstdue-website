@@ -1,0 +1,10 @@
+# Staging copy at /staging/ on the DirectAdmin host
+DirectoryIndex index.html
+Options -Indexes
+ErrorDocument 404 /staging/404.html
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+<FilesMatch "\.(md|yml|yaml)$">
+  Require all denied
+</FilesMatch>
