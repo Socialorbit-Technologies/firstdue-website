@@ -6,7 +6,7 @@
  */
 declare(strict_types=1);
 
-const TO_EMAIL   = 'inquiry@firstduefiretruckparty.com';
+const TO_EMAIL   = 'inquiry@firstduefiretruckparty.com, dhruvajha072@gmail.com'; // all recipients, comma-separated
 const FROM_EMAIL = 'website@firstduefiretruckparty.com'; // must be an address on this domain for good delivery
 const SITE_NAME  = '1st Due Fire Truck Party and Events';
 
