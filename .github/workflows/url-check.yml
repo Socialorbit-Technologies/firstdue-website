@@ -1,0 +1,17 @@
+# Manual: report HTTP status codes for a list of live URLs (results as annotations).
+name: URL check
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: "Space-separated paths"
+        default: "/ /lahaina-wildfire-logistical-support/ /help-rebuild-lives-support-lahaina-wildfire-victims/ /category/fundraise/"
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for p in ${{ inputs.paths }}; do
+            c=$(curl -s -o /dev/null -w "%{http_code} -> %{redirect_url}" "https://firstduefiretruckparty.com$p")
+            echo "::notice title=$p::$c"
+          done
