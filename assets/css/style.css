@@ -506,4 +506,5 @@ header.scrolled .nav .site-logo{width:72px;height:72px;padding:4px;border-radius
 @media (max-width:640px){.ft-thumbs{grid-template-columns:1fr 1fr 1fr;gap:8px}}
 
 /* long email/address wraps on small phones */
-.contact-card li span,.foot-contact li span,.foot-contact a{min-width:0;overflow-wrap:anywhere}
+.contact-card li span,.foot-contact li span,.foot-contact a{min-width:0}
+.foot-contact a[href^="mailto"]{font-size:14px}
