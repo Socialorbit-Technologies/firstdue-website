@@ -1,0 +1,20 @@
+name: DNS / email check
+on:
+  workflow_dispatch:
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          D=firstduefiretruckparty.com
+          n(){ v=$(dig +short "$2" "$3" | tr '\n' ' '); echo "::notice title=$1::${v:-(none)}"; }
+          n "MX" MX $D
+          n "TXT (SPF etc)" TXT $D
+          n "DMARC" TXT _dmarc.$D
+          n "DKIM default" TXT default._domainkey.$D
+          n "DKIM x" TXT x._domainkey.$D
+          n "A root" A $D
+          n "A mail" A mail.$D
+          n "PTR 104.152.168.40" PTR 40.168.152.104.in-addr.arpa
+          n "NS" NS $D
+          for mx in $(dig +short MX $D | awk '{print $2}'); do n "A of MX $mx" A $mx; done
