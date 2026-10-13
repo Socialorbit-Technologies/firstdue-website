@@ -59,7 +59,7 @@ header.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.07)}
 
 /* Hero */
 .hero{position:relative;padding:80px 0 96px;background:var(--red-deep);color:#fff;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:#3a0710 url('https://firstduefiretruckparty.com/wp-content/uploads/2023/08/Fire-Truck-Party-Event-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events-17.jpg') center/cover no-repeat}
+.hero-bg{position:absolute;inset:0;background:#3a0710}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(60,4,14,.95) 0%,rgba(122,10,28,.86) 45%,rgba(122,10,28,.45) 100%)}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
 .hero .eyebrow{color:#fff}.hero .eyebrow::before{background:#fff}
@@ -73,7 +73,7 @@ header.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.07)}
 
 /* Form card */
 .form-card{background:#fff;color:var(--ink);border-radius:14px;padding:32px;box-shadow:0 24px 60px rgba(0,0,0,.3);border-top:6px solid var(--red)}
-.form-card h3{font-size:30px;text-transform:uppercase;margin-bottom:4px}
+.form-card h2{font-size:30px;text-transform:uppercase;margin-bottom:4px}
 .form-card .note{font-size:15px;color:var(--slate);margin-bottom:20px}
 .form-card .note a{color:var(--red);font-weight:700}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -139,8 +139,8 @@ header.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.07)}
 /* Split about */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .photo-stack{position:relative;padding:0 40px 40px 0}
-.photo-stack .p1{border-radius:14px;aspect-ratio:5/4;background:var(--rose) url('https://firstduefiretruckparty.com/wp-content/uploads/2023/08/Fire-Truck-Party-Event-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events-10.jpg') center/cover}
-.photo-stack .p2{position:absolute;right:0;bottom:0;width:48%;aspect-ratio:1;border-radius:14px;border:6px solid #fff;background:var(--rose) url('https://firstduefiretruckparty.com/wp-content/uploads/2023/08/Fire-Truck-Party-Event-Kids-FirstDueFireTruckParty.com-First-Due-Fire-Truck-Party-Events-14.jpg') center/cover;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.photo-stack .p1{border-radius:14px;aspect-ratio:5/4;background:var(--rose)}
+.photo-stack .p2{position:absolute;right:0;bottom:0;width:48%;aspect-ratio:1;border-radius:14px;border:6px solid #fff;background:var(--rose);box-shadow:0 18px 40px rgba(0,0,0,.18)}
 .badge{position:absolute;left:-14px;top:24px;background:var(--red);color:#fff;border-radius:12px;padding:14px 18px;font-weight:700;font-size:15px;line-height:1.3;box-shadow:0 12px 26px rgba(200,16,46,.35)}
 .badge b{font-family:var(--head);font-size:30px;display:block}
 .checks{list-style:none;margin:24px 0 32px;display:grid;gap:12px}
@@ -180,7 +180,7 @@ details a{color:var(--red);font-weight:600}
 /* Footer */
 footer{background:#1C1C1E;color:#C9CBCF;padding:72px 0 0;font-size:15px}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
-footer h4{color:#fff;font-family:var(--head);font-size:20px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+footer h2{line-height:1.2;color:#fff;font-family:var(--head);font-size:20px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
 footer ul{list-style:none;display:grid;gap:9px}
 footer a:hover{color:#fff}
 footer .logo-text{color:#fff}
@@ -374,8 +374,8 @@ footer .site-logo{height:84px;background:#fff;border-radius:10px;padding:6px}
 .side-cta p{font-size:15px;opacity:.9;margin:6px 0 16px}
 .side-cta .btn{width:100%;margin-top:10px}
 .side-list{border:1px solid var(--line);border-radius:14px;padding:8px 20px 12px;background:#fff}
-.side-list h4{font-family:var(--head);font-size:22px;text-transform:uppercase;padding:14px 0 6px;display:flex;align-items:center;gap:8px}
-.side-list h4::before{content:"";width:14px;height:14px;background:var(--red);-webkit-mask:var(--mc) center/contain no-repeat;mask:var(--mc) center/contain no-repeat}
+.side-list h3{font-family:var(--head);font-size:22px;text-transform:uppercase;padding:14px 0 6px;display:flex;align-items:center;gap:8px}
+.side-list h3::before{content:"";width:14px;height:14px;background:var(--red);-webkit-mask:var(--mc) center/contain no-repeat;mask:var(--mc) center/contain no-repeat}
 .sg{border-top:1px solid var(--line)}
 .sg summary{padding:12px 0;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
 .sg summary span{font-size:12px;background:var(--blush);color:var(--red);border-radius:999px;padding:2px 9px}
@@ -455,8 +455,8 @@ footer .site-logo{height:84px;background:#fff;border-radius:10px;padding:6px}
 .has-mega:hover .mega,.has-mega:focus-within .mega,.has-mega.open .mega{opacity:1;visibility:visible;transform:none}
 .has-mega:hover .caret,.has-mega:focus-within .caret,.has-mega.open .caret{transform:rotate(180deg)}
 .mega-inner{display:grid;grid-template-columns:repeat(4,1fr) 1.15fr;gap:28px;padding-top:30px;padding-bottom:32px}
-.mega-col h5,.mega-cta h5{font-family:var(--head);font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:var(--ink)}
-.mega-col h5::before{content:"";width:13px;height:13px;background:var(--red);-webkit-mask:var(--mc) center/contain no-repeat;mask:var(--mc) center/contain no-repeat}
+.mega-col .mega-h,.mega-cta .mega-h{margin-top:0;font-weight:700;font-family:var(--head);font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.mega-col .mega-h::before{content:"";width:13px;height:13px;background:var(--red);-webkit-mask:var(--mc) center/contain no-repeat;mask:var(--mc) center/contain no-repeat}
 .mega-col ul{list-style:none;display:grid;gap:2px}
 .menu .mega-col a{display:block;padding:6px 8px;margin-left:-8px;border-radius:6px;font-size:15px;font-weight:500;color:var(--slate)}
 .menu .mega-col a:hover,.menu .mega-col a:focus{background:var(--blush);color:var(--red)}
@@ -473,7 +473,7 @@ header .wrap.nav{position:static}
 .dsvc[open] summary::after{content:"–"}
 .dsvc .dg{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:14px 0 4px}
 .drawer nav .dsvc a.ds{font-size:16px;font-weight:500;padding:9px 0 9px 12px;border-bottom:0;color:var(--slate)}
-.mega-col h5{white-space:nowrap;font-size:18px}
+.mega-col .mega-h{white-space:nowrap;font-size:18px}
 .mega-inner{grid-template-columns:1fr 1.25fr 1fr 1fr 1.15fr}
 
 /* ---------- Oversized header logo badge (overlaps the hero) ---------- */
@@ -504,3 +504,6 @@ header.scrolled .nav .site-logo{width:72px;height:72px;padding:4px;border-radius
 .ft-thumbs div{border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:var(--blush)}
 @media (max-width:900px){.feature-truck{grid-template-columns:1fr;padding:16px}}
 @media (max-width:640px){.ft-thumbs{grid-template-columns:1fr 1fr 1fr;gap:8px}}
+
+/* long email/address wraps on small phones */
+.contact-card li span,.foot-contact li span,.foot-contact a{min-width:0;overflow-wrap:anywhere}
