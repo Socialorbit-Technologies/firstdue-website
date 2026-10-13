@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /thank-you/
+Disallow: /send-quote.php
+
+Sitemap: https://firstduefiretruckparty.com/sitemap.xml
