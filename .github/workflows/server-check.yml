@@ -1,0 +1,18 @@
+name: Server check (list live folder)
+on:
+  workflow_dispatch:
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+    steps:
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp >/dev/null
+          L="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no"
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; cls -1a --size public_html/; bye" "ftp://$FTP_SERVER" | tr -d '\r' > l.txt
+          echo "::notice title=public_html entries::$(sed 's#public_html/##' l.txt | tr '\n' ' ')"
+          for f in .htaccess index.php wp-config.php; do grep -E "(^|/)$f\$" l.txt >/dev/null && echo "::notice title=present::$f" || echo "::notice title=missing::$f"; done
+          ls_b=$(grep -o 'htaccess[^ ]*' l.txt | tr '\n' ' '); echo "::notice title=htaccess files::$ls_b"
