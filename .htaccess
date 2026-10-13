@@ -4,6 +4,7 @@
 DirectoryIndex index.html index.php
 Options -Indexes
 ErrorDocument 404 /404.html
+ErrorDocument 410 /404.html
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -19,8 +20,9 @@ RewriteRule ^home-old-2023/?$ / [R=301,L]
 RewriteRule ^about-us-old-2023/?$ /about-us/ [R=301,L]
 
 # Pages that no longer exist -> closest page
-RewriteRule ^help-rebuild-lives-support-lahaina-wildfire-victims/?$ / [R=301,L]
-RewriteRule ^lahaina-wildfire-logistical-support/?$ / [R=301,L]
+# Removed fundraiser posts (Lahaina wildfire) -> 410 Gone so Google drops them from search
+RewriteRule ^(help-rebuild-lives-support-lahaina-wildfire-victims|lahaina-wildfire-logistical-support)(/.*)?$ - [G,L]
+RewriteRule ^category/fundraise(/.*)?$ - [G,L]
 RewriteRule ^elementor-hf/.*$ /services/ [R=301,L]
 RewriteRule ^(category|tag|author)/.*$ / [R=301,L]
 RewriteRule ^feed/?$ / [R=301,L]
