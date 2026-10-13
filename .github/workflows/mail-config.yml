@@ -1,0 +1,53 @@
+# Writes mail-config.php (Mailgun SMTP login for the quote form) to the folder ABOVE public_html.
+# The login comes from repo secrets MAILGUN_SMTP_USER and MAILGUN_SMTP_PASS, so it never appears in the repo.
+# Run manually: Actions > "Write mail config" > Run workflow.
+name: Write mail config
+
+on:
+  workflow_dispatch:
+    inputs:
+      smtp_host:
+        description: "Mailgun SMTP host (EU accounts: smtp.eu.mailgun.org)"
+        default: "smtp.mailgun.org"
+      smtp_port:
+        description: "SMTP port (587, 2525 or 465)"
+        default: "587"
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      SMTP_USER: ${{ secrets.MAILGUN_SMTP_USER }}
+      SMTP_PASS: ${{ secrets.MAILGUN_SMTP_PASS }}
+      SMTP_HOST: ${{ inputs.smtp_host }}
+      SMTP_PORT: ${{ inputs.smtp_port }}
+    steps:
+      - name: Check secrets
+        run: |
+          [ -n "$SMTP_USER" ] && [ -n "$SMTP_PASS" ] || { echo "::error::Add MAILGUN_SMTP_USER and MAILGUN_SMTP_PASS repo secrets first"; exit 1; }
+      - name: Build mail-config.php
+        run: |
+          php -r '
+            $u = getenv("SMTP_USER"); $domain = substr(strrchr($u, "@"), 1);
+            $cfg = [
+              "smtp_host"  => getenv("SMTP_HOST"),
+              "smtp_port"  => (int)getenv("SMTP_PORT"),
+              "smtp_user"  => $u,
+              "smtp_pass"  => getenv("SMTP_PASS"),
+              "from_email" => "website@" . $domain,
+              "from_name"  => "1st Due Fire Truck Party Website",
+              "to"         => "inquiry@firstduefiretruckparty.com, dhruvajha072@gmail.com",
+            ];
+            file_put_contents("mail-config.php", "<?php\n// Written by GitHub Actions (Write mail config). Do not move into public_html.\nreturn " . var_export($cfg, true) . ";\n");
+            echo "::notice title=Sender::website@$domain via " . getenv("SMTP_HOST") . ":" . getenv("SMTP_PORT") . "\n";
+          '
+          php -l mail-config.php
+      - name: Upload above public_html
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp >/dev/null
+          L="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no"
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; put mail-config.php -o mail-config.php; chmod 640 mail-config.php; cls -l mail-config.php; bye" "ftp://$FTP_SERVER" | sed 's/^/::notice title=Server::/'
+          rm -f mail-config.php
