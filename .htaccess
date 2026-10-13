@@ -5,6 +5,9 @@ ErrorDocument 404 /staging/404.html
 <IfModule mod_headers.c>
   Header always set X-Robots-Tag "noindex, nofollow"
 </IfModule>
+<Files ".ftp-deploy-sync-state.json">
+  Require all denied
+</Files>
 <FilesMatch "\.(md|yml|yaml)$">
   Require all denied
 </FilesMatch>
