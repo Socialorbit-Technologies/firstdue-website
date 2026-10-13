@@ -2,9 +2,12 @@
 /**
  * Quote form handler for firstduefiretruckparty.com
  * Emails each request to the business, then sends the visitor to /thank-you/.
- * Settings: change TO_EMAIL / FROM_EMAIL below if needed.
+ * Sends through Mailgun SMTP when ../mail-config.php exists (see mail-config.sample.php
+ * in the source folder); otherwise falls back to PHP mail().
+ * TO_EMAIL / FROM_EMAIL below are defaults; mail-config.php can override them.
  */
 declare(strict_types=1);
+date_default_timezone_set('America/New_York');
 
 const TO_EMAIL   = 'inquiry@firstduefiretruckparty.com, dhruvajha072@gmail.com'; // all recipients, comma-separated
 const FROM_EMAIL = 'website@firstduefiretruckparty.com'; // must be an address on this domain for good delivery
@@ -70,14 +73,60 @@ $body .= "Sent from page: $page\n";
 $body .= "Time: " . date('Y-m-d H:i:s T') . "\n";
 $body .= "IP: " . ($_SERVER['REMOTE_ADDR'] ?? '') . "\n";
 
-$headers = [
-    'From: ' . SITE_NAME . ' Website <' . FROM_EMAIL . '>',
-    'Reply-To: ' . $name . ' <' . $email . '>',
-    'Content-Type: text/plain; charset=UTF-8',
-    'X-Mailer: PHP/' . phpversion(),
-];
+// SMTP settings (Mailgun) live in mail-config.php one folder ABOVE public_html,
+// so the password is never in the repo or reachable on the web.
+$PRIVATE_DIR = dirname(rtrim((string)($_SERVER['DOCUMENT_ROOT'] ?? __DIR__), '/'));
+$CONFIG_FILE = $PRIVATE_DIR . '/mail-config.php';
+$cfg = is_readable($CONFIG_FILE) ? (array)(include $CONFIG_FILE) : [];
 
-$ok = @mail(TO_EMAIL, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers), '-f' . FROM_EMAIL);
+function log_mail_error(string $msg): void {
+    global $PRIVATE_DIR;
+    @file_put_contents($PRIVATE_DIR . '/mail-error.log', date('c') . '  ' . $msg . "\n", FILE_APPEND);
+    error_log('send-quote: ' . $msg);
+}
+
+$recipients = array_filter(array_map('trim', explode(',', $cfg['to'] ?? TO_EMAIL)));
+$fromEmail  = $cfg['from_email'] ?? FROM_EMAIL;
+$fromName   = $cfg['from_name']  ?? (SITE_NAME . ' Website');
+$ok = false;
+
+if (!empty($cfg['smtp_host']) && !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass'])) {
+    require __DIR__ . '/lib/phpmailer/Exception.php';
+    require __DIR__ . '/lib/phpmailer/PHPMailer.php';
+    require __DIR__ . '/lib/phpmailer/SMTP.php';
+    $port = (int)($cfg['smtp_port'] ?? 587);
+    try {
+        $m = new PHPMailer\PHPMailer\PHPMailer(true);
+        $m->isSMTP();
+        $m->Host       = $cfg['smtp_host'];
+        $m->Port       = $port;
+        $m->SMTPAuth   = true;
+        $m->Username   = $cfg['smtp_user'];
+        $m->Password   = $cfg['smtp_pass'];
+        $m->SMTPSecure = $port === 465 ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS
+                                       : PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $m->Timeout    = 15;
+        $m->CharSet    = 'UTF-8';
+        $m->setFrom($fromEmail, $fromName);
+        foreach ($recipients as $r) { $m->addAddress($r); }
+        $m->addReplyTo($email, $name);
+        $m->Subject = $subject;
+        $m->Body    = $body;
+        $ok = $m->send();
+    } catch (\Throwable $ex) {
+        log_mail_error('SMTP failed: ' . (isset($m) ? $m->ErrorInfo : '') . ' / ' . $ex->getMessage());
+        $ok = false;
+    }
+} else {
+    // Fallback if mail-config.php is missing: the server's own mail() (less reliable).
+    $headers = [
+        'From: ' . $fromName . ' <' . $fromEmail . '>',
+        'Reply-To: ' . $name . ' <' . $email . '>',
+        'Content-Type: text/plain; charset=UTF-8',
+    ];
+    $ok = @mail(implode(', ', $recipients), '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers), '-f' . $fromEmail);
+    if (!$ok) { log_mail_error('mail() returned false (no SMTP config found at ' . $CONFIG_FILE . ')'); }
+}
 
 if (!$ok) { back_with_error(); }
 
