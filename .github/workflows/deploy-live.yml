@@ -33,13 +33,16 @@ jobs:
           set -e
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp >/dev/null
           L="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set net:max-retries 2; set net:timeout 30"
-          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; cls -1a $LIVE_DIR; bye" "ftp://$FTP_SERVER" > listing.txt
-          echo "Files in $LIVE_DIR:"; cat listing.txt | sed 's#.*/##' | sort | head -60
-          if grep -q 'htaccess.wp-backup' listing.txt; then
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; cls -1a $LIVE_DIR; bye" "ftp://$FTP_SERVER" | tr -d '\r' > "$RUNNER_TEMP/listing.txt"
+          echo "Files in $LIVE_DIR:"; sed 's#.*/##' "$RUNNER_TEMP/listing.txt" | sort | head -60
+          if grep -q 'listing.txt' "$RUNNER_TEMP/listing.txt"; then
+            lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; rm -f ${LIVE_DIR}listing.txt; bye" "ftp://$FTP_SERVER" && echo "Removed stray listing.txt"
+          fi
+          if grep -q 'htaccess.wp-backup' "$RUNNER_TEMP/listing.txt"; then
             echo "Backup already exists - skipping."
-          elif grep -qE '(^|/)\.htaccess$' listing.txt; then
+          elif grep -qE '(^|/)\.htaccess$' "$RUNNER_TEMP/listing.txt"; then
             B=".htaccess.wp-backup-$(date +%Y%m%d)"
-            lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; get $LIVE_DIR.htaccess -o wp-htaccess; put wp-htaccess -o $LIVE_DIR$B; bye" "ftp://$FTP_SERVER"
+            lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -e "$L; get $LIVE_DIR.htaccess -o $RUNNER_TEMP/wp-htaccess; put $RUNNER_TEMP/wp-htaccess -o $LIVE_DIR$B; bye" "ftp://$FTP_SERVER"
             echo "Backed up WordPress .htaccess to $LIVE_DIR$B"
           else
             echo "No existing .htaccess found."
@@ -49,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wordpress-htaccess-backup
-          path: wp-htaccess
+          path: ${{ runner.temp }}/wp-htaccess
           if-no-files-found: ignore
 
       - name: Upload the static site (no deletions)
