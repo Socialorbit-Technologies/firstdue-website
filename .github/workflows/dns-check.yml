@@ -17,4 +17,6 @@ jobs:
           n "A mail" A mail.$D
           n "PTR 104.152.168.40" PTR 40.168.152.104.in-addr.arpa
           n "NS" NS $D
+          n "SPF include" TXT dc-aa8e722993._spfm.$D
+          n "google DKIM" TXT google._domainkey.$D
           for mx in $(dig +short MX $D | awk '{print $2}'); do n "A of MX $mx" A $mx; done
