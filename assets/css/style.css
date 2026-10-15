@@ -508,3 +508,8 @@ header.scrolled .nav .site-logo{width:72px;height:72px;padding:4px;border-radius
 /* long email/address wraps on small phones */
 .contact-card li span,.foot-contact li span,.foot-contact a{min-width:0}
 .foot-contact a[href^="mailto"]{font-size:14px}
+
+/* Logo is a self-contained badge: no white tile behind it */
+header .nav .site-logo,header.scrolled .nav .site-logo{background:none;border:0;border-radius:0;padding:0;box-shadow:none;filter:drop-shadow(0 8px 14px rgba(28,28,30,.28))}
+header.scrolled .nav .site-logo{filter:drop-shadow(0 3px 6px rgba(28,28,30,.2))}
+footer .site-logo{background:none;padding:0;border-radius:0;height:120px}
