@@ -58,8 +58,8 @@
   var grid = d.getElementById('svcGrid');
   d.querySelectorAll('.tab').forEach(function (b) {
     b.addEventListener('click', function () {
-      d.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('on'); });
-      b.classList.add('on');
+      d.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('on'); x.setAttribute('aria-selected', 'false'); });
+      b.classList.add('on'); b.setAttribute('aria-selected', 'true');
       var f = b.getAttribute('data-f');
       if (grid) grid.querySelectorAll('.svc').forEach(function (c) { c.classList.toggle('hide', f !== 'all' && c.getAttribute('data-g') !== f); });
     });

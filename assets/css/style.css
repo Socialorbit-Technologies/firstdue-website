@@ -1,3 +1,11 @@
+/* self-hosted fonts (Latin subset) */
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/barlow-condensed-600.woff) format('woff')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/barlow-condensed-700.woff) format('woff')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/barlow-condensed-800.woff) format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/inter-400.woff) format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/inter-500.woff) format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-600.woff) format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-700.woff) format('woff')}
 :root{
   --red:#C8102E; --red-hover:#A50D26; --red-deep:#7A0A1C;
   --blush:#FDECEE; --rose:#F6C9CF;
@@ -132,7 +140,7 @@ header.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.07)}
 /* Steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;counter-reset:s}
 .step{position:relative;padding:34px 30px;border-radius:12px;background:#fff;border:1px solid var(--line)}
-.step-num{font-family:var(--head);font-size:64px;font-weight:800;color:var(--rose);line-height:.8;margin-bottom:14px}
+.step-num{font-family:var(--head);font-size:64px;font-weight:800;color:#D9586D;line-height:.8;margin-bottom:14px}
 .step p{color:var(--slate);font-size:16px;margin-top:8px}
 .steps-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
 
@@ -227,7 +235,7 @@ footer .logo-text small{color:#9a9da3}
 .hero-badge{display:inline-flex;align-items:center;gap:10px;border:1.5px solid rgba(212,175,55,.7);color:#F5E08A;border-radius:999px;padding:7px 16px 7px 8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px;background:rgba(0,0,0,.2)}
 .hero-badge svg{width:22px;height:22px;fill:var(--gold)}
 /* Step labels like radio calls */
-.step-tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);border:1.5px solid var(--gold);border-radius:4px;padding:3px 8px;margin-bottom:12px}
+.step-tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7A5C0E;border:1.5px solid var(--gold);border-radius:4px;padding:3px 8px;margin-bottom:12px}
 .step{border-top:5px solid var(--red)}
 /* Form card: gold pinstripe */
 .form-card{box-shadow:0 24px 60px rgba(0,0,0,.3),inset 0 0 0 1px rgba(212,175,55,.35)}
