@@ -60,6 +60,8 @@ RewriteRule ^(wp-login\.php|xmlrpc\.php|wp-config\.php)$ - [R=404,L]
 </IfModule>
 
 AddType application/manifest+json .webmanifest
+AddType font/woff .woff
+AddType image/webp .webp
 AddType image/x-icon .ico
 
 # Compression
@@ -78,5 +80,6 @@ AddType image/x-icon .ico
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
   ExpiresByType application/manifest+json "access plus 1 week"
 </IfModule>
