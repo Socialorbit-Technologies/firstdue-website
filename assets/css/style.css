@@ -522,3 +522,4 @@ header .nav .site-logo,header.scrolled .nav .site-logo{background:none;border:0;
 header.scrolled .nav .site-logo{filter:drop-shadow(0 3px 6px rgba(28,28,30,.2))}
 footer .site-logo{background:none;padding:0;border-radius:0;height:120px}
 .field .opt{font-weight:400;color:var(--muted,#6b6b70);font-size:.85em}
+.tips{display:grid;gap:10px;padding-left:20px;margin:16px 0}.tips li{color:var(--slate)}.tips strong{color:var(--ink)}.read-more{margin-top:14px}.read-more a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
