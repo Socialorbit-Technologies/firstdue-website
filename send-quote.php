@@ -1,7 +1,8 @@
 <?php
 /**
  * Quote form handler for firstduefiretruckparty.com
- * Emails each request to the business, then sends the visitor to /thank-you/.
+ * Emails each request to the business, copies it to the Google Sheet lead log
+ * (when 'sheet_url' is set in mail-config.php), then sends the visitor to /thank-you/.
  * Sends through Mailgun SMTP when ../mail-config.php exists (see mail-config.sample.php
  * in the source folder); otherwise falls back to PHP mail().
  * TO_EMAIL / FROM_EMAIL below are defaults; mail-config.php can override them.
@@ -9,7 +10,7 @@
 declare(strict_types=1);
 date_default_timezone_set('America/New_York');
 
-const TO_EMAIL   = 'inquiry@firstduefiretruckparty.com, dhruvajha072@gmail.com'; // all recipients, comma-separated
+const TO_EMAIL   = 'inquiry@firstduefiretruckparty.com, dhruvjha72@gmail.com'; // all recipients, comma-separated
 const FROM_EMAIL = 'website@firstduefiretruckparty.com'; // must be an address on this domain for good delivery
 const SITE_NAME  = '1st Due Fire Truck Party and Events';
 
@@ -128,7 +129,31 @@ if (!empty($cfg['smtp_host']) && !empty($cfg['smtp_user']) && !empty($cfg['smtp_
     if (!$ok) { log_mail_error('mail() returned false (no SMTP config found at ' . $CONFIG_FILE . ')'); }
 }
 
-if (!$ok) { back_with_error(); }
+// Copy the lead to the Google Sheet (Apps Script web app; URL lives in mail-config.php as 'sheet_url').
+$sheetOk = false;
+$sheetUrl = (string)($cfg['sheet_url'] ?? '');
+if ($sheetUrl !== '' && function_exists('curl_init')) {
+    $payload = json_encode([
+        'name' => $name, 'phone' => $phone, 'email' => $email, 'service' => $service,
+        'event_date' => $date, 'location' => $location, 'guests' => $guests, 'message' => $message,
+        'page' => $page, 'site' => $IS_STAGING ? 'staging (test)' : 'live',
+        'email_sent' => $ok, 'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
+    ]);
+    $ch = curl_init($sheetUrl);
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true, CURLOPT_POSTFIELDS => $payload,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_FOLLOWLOCATION => true, CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 5, CURLOPT_TIMEOUT => 10,
+    ]);
+    $resp = curl_exec($ch);
+    $sheetOk = is_string($resp) && trim($resp) === 'ok';
+    if (!$sheetOk) { log_mail_error('Sheet log failed: ' . (is_string($resp) ? substr($resp, 0, 200) : curl_error($ch))); }
+    curl_close($ch);
+}
+
+// Show the error (and ask them to call) only if the lead reached neither the inbox nor the sheet.
+if (!$ok && !$sheetOk) { back_with_error(); }
 
 header('Location: ' . $BASE . '/thank-you/', true, 303);
 exit;
