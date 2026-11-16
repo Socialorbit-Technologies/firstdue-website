@@ -57,6 +57,10 @@ RewriteRule ^(wp-login\.php|xmlrpc\.php|wp-config\.php)$ - [R=404,L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   Header always set Strict-Transport-Security "max-age=31536000"
+  # HTML always revalidates so a deploy reaches returning visitors at once
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 AddType application/manifest+json .webmanifest
@@ -72,7 +76,7 @@ AddType image/x-icon .ico
 # Browser caching
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"

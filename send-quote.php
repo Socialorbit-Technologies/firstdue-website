@@ -51,7 +51,7 @@ $page     = clean('page', 200);
 $message  = trim(strip_tags((string)($_POST['message'] ?? '')));
 $message  = mb_substr($message, 0, 2000);
 
-if ($name === '' || $phone === '' || $email === '' || $service === '' || $date === '' || $location === '') {
+if ($name === '' || $phone === '' || $service === '' || $date === '') {
     back_with_error();
 }
 if (preg_match('~https?://~i', $message) && substr_count(strtolower($message), 'http') > 2) {
@@ -63,10 +63,10 @@ $body  = "New quote request from the website\n";
 $body .= "==================================\n\n";
 $body .= "Name:        $name\n";
 $body .= "Phone:       $phone\n";
-$body .= "Email:       $email\n";
+$body .= "Email:       " . ($email !== '' ? $email : '(not given)') . "\n";
 $body .= "Event type:  $service\n";
 $body .= "Event date:  $date\n";
-$body .= "City / ZIP:  $location\n";
+$body .= "City / ZIP:  " . ($location !== '' ? $location : '(not given)') . "\n";
 $body .= "Guests:      $guests\n\n";
 $body .= "Message:\n" . ($message !== '' ? $message : '(none)') . "\n\n";
 $body .= "Sent from page: $page\n";
@@ -109,7 +109,7 @@ if (!empty($cfg['smtp_host']) && !empty($cfg['smtp_user']) && !empty($cfg['smtp_
         $m->CharSet    = 'UTF-8';
         $m->setFrom($fromEmail, $fromName);
         foreach ($recipients as $r) { $m->addAddress($r); }
-        $m->addReplyTo($email, $name);
+        if ($email !== '') { $m->addReplyTo($email, $name); }
         $m->Subject = $subject;
         $m->Body    = $body;
         $ok = $m->send();
@@ -121,7 +121,7 @@ if (!empty($cfg['smtp_host']) && !empty($cfg['smtp_user']) && !empty($cfg['smtp_
     // Fallback if mail-config.php is missing: the server's own mail() (less reliable).
     $headers = [
         'From: ' . $fromName . ' <' . $fromEmail . '>',
-        'Reply-To: ' . $name . ' <' . $email . '>',
+        'Reply-To: ' . ($email !== '' ? $name . ' <' . $email . '>' : $fromEmail),
         'Content-Type: text/plain; charset=UTF-8',
     ];
     $ok = @mail(implode(', ', $recipients), '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers), '-f' . $fromEmail);
