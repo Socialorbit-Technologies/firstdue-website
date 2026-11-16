@@ -24,6 +24,7 @@ jobs:
       SMTP_PASS: ${{ secrets.MAILGUN_SMTP_PASS }}
       SMTP_HOST: ${{ inputs.smtp_host }}
       SMTP_PORT: ${{ inputs.smtp_port }}
+      SHEET_URL: ${{ secrets.LEADS_SHEET_URL }}  # Apps Script web app for the Google Sheet lead log (optional)
     steps:
       - name: Check secrets
         run: |
@@ -39,7 +40,8 @@ jobs:
               "smtp_pass"  => getenv("SMTP_PASS"),
               "from_email" => "website@" . $domain,
               "from_name"  => "1st Due Fire Truck Party Website",
-              "to"         => "inquiry@firstduefiretruckparty.com, dhruvajha072@gmail.com",
+              "to"         => "inquiry@firstduefiretruckparty.com, dhruvjha72@gmail.com",
+              "sheet_url"  => (string)getenv("SHEET_URL"),
             ];
             file_put_contents("mail-config.php", "<?php\n// Written by GitHub Actions (Write mail config). Do not move into public_html.\nreturn " . var_export($cfg, true) . ";\n");
             echo "::notice title=Sender::website@$domain via " . getenv("SMTP_HOST") . ":" . getenv("SMTP_PORT") . "\n";
