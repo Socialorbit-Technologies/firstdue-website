@@ -557,7 +557,7 @@ header.scrolled .nav .site-logo{width:72px;height:72px;padding:4px;border-radius
 /* Logo is a self-contained badge: no white tile behind it */
 header .nav .site-logo,header.scrolled .nav .site-logo{background:none;border:0;border-radius:0;padding:0;box-shadow:none;filter:drop-shadow(0 8px 14px rgba(28,28,30,.28))}
 header.scrolled .nav .site-logo{filter:drop-shadow(0 3px 6px rgba(28,28,30,.2))}
-footer .site-logo{background:none;padding:0;border-radius:0;height:120px}</style>
+footer .site-logo{background:none;padding:0;border-radius:0;height:120px}.field .opt{font-weight:400;color:var(--muted,#6b6b70);font-size:.85em}</style>
 <!-- Google Analytics 4: paste the GA4 tag here (see README.md) -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://firstduefiretruckparty.com/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://firstduefiretruckparty.com/services/"}, {"@type": "ListItem", "position": 3, "name": "Birthday Parties", "item": "https://firstduefiretruckparty.com/services/birthday-parties/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "Fire Truck Birthday Parties", "serviceType": "Birthday Parties", "url": "https://firstduefiretruckparty.com/services/birthday-parties/", "description": "Lights, sirens, a truck tour and a ride around the block. Book a real fire truck birthday party in Orlando from $750, all-inclusive. Call 321.248.9000.", "provider": {"@id": "https://firstduefiretruckparty.com/#business"}, "areaServed": "Orlando and Central Florida", "offers": {"@type": "Offer", "priceCurrency": "USD", "price": "750", "description": "Starting from $750, all-inclusive"}}</script>
@@ -697,19 +697,19 @@ footer .site-logo{background:none;padding:0;border-radius:0;height:120px}</style
     <div class="form-card"><div class="qwrap" id="quote">
       <h2>Get Your Free Quote</h2>
       <p class="note">Takes 30 seconds. Prefer to talk? <a href="tel:+13212489000">321.248.9000</a></p>
-      <form class="qform" method="post" action="../../send-quote.php" onsubmit="if(location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="Birthday Parties">
+      <form class="qform" method="post" action="../../send-quote.php" onsubmit="if(window.location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="Birthday Parties">
         <div class="form-error" role="alert">Something went wrong. Please call us at 321.248.9000.</div>
         <div class="grid2">
           <div class="field"><label for="page-name">Name <em>*</em></label><input id="page-name" name="name" required autocomplete="name" placeholder="Jane Smith"></div>
           <div class="field"><label for="page-phone">Phone <em>*</em></label><input id="page-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(407) 555-0123"></div>
         </div>
-        <div class="field"><label for="page-email">Email <em>*</em></label><input id="page-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com"></div>
+        <div class="field"><label for="page-email">Email <span class="opt">(optional)</span></label><input id="page-email" name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
         <div class="grid2">
           <div class="field"><label for="page-svc">Event type <em>*</em></label><select id="page-svc" name="service" required><option value="">Choose one</option><option selected>Birthday Parties</option><option>Water &amp; Wetdown Parties</option><option>Gender Reveals</option><option>Weddings</option><option>Fire Truck Ride Alongs</option><option>School Visits</option><option>School Carnivals</option><option>Scouting Events</option><option>Church Events</option><option>HOA &amp; Local Community Events</option><option>Parades</option><option>Water Musters</option><option>Corporate Events</option><option>Company Picnics</option><option>Grand Openings</option><option>Trade Shows</option><option>Movie Props</option><option>Electioneering Runs</option><option>Holiday Santa Visits</option><option>Holiday Easter Bunny Runs</option><option>Christmas Light Tours</option><option>Other</option></select></div>
           <div class="field"><label for="page-date">Event date <em>*</em></label><input id="page-date" name="event_date" type="date" required></div>
         </div>
         <div class="grid2">
-          <div class="field"><label for="page-city">City or ZIP <em>*</em></label><input id="page-city" name="location" required placeholder="Orlando or 32801"></div>
+          <div class="field"><label for="page-city">City or ZIP <span class="opt">(optional)</span></label><input id="page-city" name="location" placeholder="Orlando or 32801"></div>
           <div class="field"><label for="page-guests">Guests</label><select id="page-guests" name="guests"><option>Not sure yet</option><option>Under 25</option><option>25–50</option><option>50–100</option><option>100+</option></select></div>
         </div>
         <div class="field"><label for="page-msg">Anything else?</label><textarea id="page-msg" name="message" rows="2" placeholder="Tell us about your event (optional)"></textarea></div>
@@ -759,19 +759,19 @@ footer .site-logo{background:none;padding:0;border-radius:0;height:120px}</style
     <div class="qwrap">
       <h2>Get Your Free Quote</h2>
       <p class="note">Takes 30 seconds. Prefer to talk? <a href="tel:+13212489000">321.248.9000</a></p>
-      <form class="qform" method="post" action="../../send-quote.php" onsubmit="if(location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="">
+      <form class="qform" method="post" action="../../send-quote.php" onsubmit="if(window.location.hostname.endsWith('github.io')){event.preventDefault();alert('GitHub preview: the form only sends on the DirectAdmin staging site and the live site.');return false;}" data-preselect="">
         <div class="form-error" role="alert">Something went wrong. Please call us at 321.248.9000.</div>
         <div class="grid2">
           <div class="field"><label for="modal-name">Name <em>*</em></label><input id="modal-name" name="name" required autocomplete="name" placeholder="Jane Smith"></div>
           <div class="field"><label for="modal-phone">Phone <em>*</em></label><input id="modal-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(407) 555-0123"></div>
         </div>
-        <div class="field"><label for="modal-email">Email <em>*</em></label><input id="modal-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com"></div>
+        <div class="field"><label for="modal-email">Email <span class="opt">(optional)</span></label><input id="modal-email" name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
         <div class="grid2">
           <div class="field"><label for="modal-svc">Event type <em>*</em></label><select id="modal-svc" name="service" required><option value="">Choose one</option><option>Birthday Parties</option><option>Water &amp; Wetdown Parties</option><option>Gender Reveals</option><option>Weddings</option><option>Fire Truck Ride Alongs</option><option>School Visits</option><option>School Carnivals</option><option>Scouting Events</option><option>Church Events</option><option>HOA &amp; Local Community Events</option><option>Parades</option><option>Water Musters</option><option>Corporate Events</option><option>Company Picnics</option><option>Grand Openings</option><option>Trade Shows</option><option>Movie Props</option><option>Electioneering Runs</option><option>Holiday Santa Visits</option><option>Holiday Easter Bunny Runs</option><option>Christmas Light Tours</option><option>Other</option></select></div>
           <div class="field"><label for="modal-date">Event date <em>*</em></label><input id="modal-date" name="event_date" type="date" required></div>
         </div>
         <div class="grid2">
-          <div class="field"><label for="modal-city">City or ZIP <em>*</em></label><input id="modal-city" name="location" required placeholder="Orlando or 32801"></div>
+          <div class="field"><label for="modal-city">City or ZIP <span class="opt">(optional)</span></label><input id="modal-city" name="location" placeholder="Orlando or 32801"></div>
           <div class="field"><label for="modal-guests">Guests</label><select id="modal-guests" name="guests"><option>Not sure yet</option><option>Under 25</option><option>25–50</option><option>50–100</option><option>100+</option></select></div>
         </div>
         <div class="field"><label for="modal-msg">Anything else?</label><textarea id="modal-msg" name="message" rows="2" placeholder="Tell us about your event (optional)"></textarea></div>
@@ -784,6 +784,6 @@ footer .site-logo{background:none;padding:0;border-radius:0;height:120px}</style
     </div>
   </div>
 </div>
-<script src="../../assets/js/main.js?v=5c8d3c8927" defer></script>
+<script src="../../assets/js/main.js?v=c4bd4af0d3" defer></script>
 </body>
 </html>

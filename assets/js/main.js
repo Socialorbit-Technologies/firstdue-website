@@ -1,6 +1,33 @@
 (function () {
   'use strict';
   var d = document;
+  // Analytics (GA4). Paste the client's Measurement ID (G-XXXXXXXXXX) below to turn it on.
+  // It only loads on the live site, never on /staging/ or the GitHub Pages preview.
+  var GA4_ID = ''; // PLACEHOLDER: client's GA4 Measurement ID
+  var isLive = location.hostname === 'firstduefiretruckparty.com' && location.pathname.indexOf('/staging/') !== 0;
+  window.dataLayer = window.dataLayer || [];
+  if (!window.gtag) window.gtag = function () { window.dataLayer.push(arguments); };
+  if (GA4_ID && isLive) {
+    var ga = d.createElement('script'); ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    d.head.appendChild(ga);
+    window.gtag('js', new Date());
+    window.gtag('config', GA4_ID);
+  }
+  function track(name, params) { try { window.gtag('event', name, params || {}); } catch (e) {} }
+  function store(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+  function recall(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+
+  // Lead events: phone taps, quote popup opens, form sends, thank-you page
+  d.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (a) track('click_to_call', { page_path: location.pathname });
+  });
+  if (/\/thank-you\/$/.test(location.pathname)) {
+    track('generate_lead', { service: recall('fd_lead_service') || '(unknown)', source_page: recall('fd_lead_page') || '(unknown)' });
+    store('fd_lead_service', ''); store('fd_lead_page', '');
+  }
+
 
   // Sticky header shadow
   var hdr = d.getElementById('hdr');
@@ -24,6 +51,8 @@
     if (pre && f.service && !f.service.value) f.service.value = pre;
     if (params.get('error') === '1') { var err = f.querySelector('.form-error'); if (err) err.style.display = 'block'; }
     f.addEventListener('submit', function () {
+      store('fd_lead_service', f.service ? f.service.value : ''); store('fd_lead_page', location.pathname);
+      track('quote_form_submit', { service: f.service ? f.service.value : '', page_path: location.pathname });
       var b = f.querySelector('button[type=submit]');
       if (b) { b.disabled = true; b.textContent = 'Sending…'; }
     });
@@ -35,6 +64,7 @@
   function openQuote() {
     closeDrawer();
     lastFocus = d.activeElement;
+    track('quote_popup_open', { page_path: location.pathname });
     // carry over the page's preselected service
     var pageForm = d.querySelector('#quote .qform');
     var mf = modal.querySelector('.qform');
